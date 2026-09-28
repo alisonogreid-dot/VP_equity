@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equity · Vanishing Points Week 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D1117;
+  --surface: #161B22;
+  --surface2: #1C2333;
+  --border: rgba(255,255,255,0.08);
+  --text: #E6EDF3;
+  --muted: #9BA5B0;
+  --accent: #D9664C;
+  --accent-glow: rgba(217,102,76,0.15);
+  --teal: #2FB3A3;
+  --teal-glow: rgba(47,179,163,0.12);
+  --sand: #E9C46A;
+  --sand-glow: rgba(233,196,106,0.12);
+  --blue: #5B9BD5;
+  --olive: #8FA64A;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Source Sans 3', 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+a { color: var(--teal); }
+a:hover { color: var(--sand); }
+:focus-visible { outline: 2px solid var(--sand); outline-offset: 3px; }
+
+.top-bar { height: 4px; background: linear-gradient(90deg, var(--accent), var(--sand), var(--teal)); }
+
+/* HERO */
+.hero { min-height: 46vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem 1.5rem; position: relative; overflow: hidden;
+  background: radial-gradient(ellipse at 30% 50%, rgba(217,102,76,0.1) 0%, transparent 55%), radial-gradient(ellipse at 70% 50%, rgba(233,196,106,0.08) 0%, transparent 55%); }
+.hero::before { content: 'EQUITY'; position: absolute; font-family: var(--serif); font-size: clamp(6rem, 22vw, 18rem); font-weight: 900; color: rgba(255,255,255,0.02); top: 50%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; pointer-events: none; }
+.hero-label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.3rem; }
+.hero h1 { font-family: var(--serif); font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 900; line-height: 1.15; margin-bottom: 1rem; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 620px; }
+.hero-meta { margin-top: 1.5rem; display: flex; gap: 0.7rem; flex-wrap: wrap; justify-content: center; }
+.hero-meta span { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--surface); padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border); }
+
+/* NAV */
+.jump { position: sticky; top: 0; z-index: 10; background: rgba(13,17,23,0.94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--border); }
+.jump .inner { max-width: 880px; margin: 0 auto; padding: 0.55rem 1.5rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.jump a { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 0.3rem 0.6rem; border-radius: 5px; border: 1px solid var(--border); }
+.jump a:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+.jump .day { color: var(--sand); border-color: rgba(233,196,106,0.35); }
+
+.container { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+section { padding: 3.2rem 0; scroll-margin-top: 3rem; }
+section + section { border-top: 1px solid var(--border); }
+
+h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 700; margin-bottom: 1.1rem; line-height: 1.25; }
+h2 .num { font-family: var(--mono); font-size: 0.74rem; color: var(--accent); letter-spacing: 0.12em; display: block; margin-bottom: 0.3rem; }
+h2 .when { font-family: var(--mono); font-size: 0.66rem; color: var(--sand); letter-spacing: 0.1em; margin-left: 0.6rem; border: 1px solid rgba(233,196,106,0.35); padding: 0.1rem 0.45rem; border-radius: 4px; vertical-align: middle; }
+h3 { font-size: 1.05rem; font-weight: 700; color: var(--teal); margin: 1.5rem 0 0.6rem; }
+p { margin-bottom: 1rem; color: var(--muted); }
+p strong, li strong { color: var(--text); font-weight: 600; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem 1.6rem; margin-bottom: 1rem; }
+.card p:last-child { margin-bottom: 0; }
+.tint-accent { background: linear-gradient(135deg, var(--surface), rgba(217,102,76,0.08)); }
+.tint-teal { background: linear-gradient(135deg, var(--surface), rgba(47,179,163,0.08)); }
+.tint-sand { background: linear-gradient(135deg, var(--surface), rgba(233,196,106,0.07)); }
+
+.callout { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0; display: flex; gap: 0.8rem; align-items: flex-start; }
+.callout .ic { font-size: 1.15rem; flex-shrink: 0; margin-top: 0.1rem; }
+.callout p { margin: 0; font-size: 0.93rem; color: var(--text); }
+
+.tag { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sand); display: block; margin-bottom: 0.35rem; }
+
+/* TWO DAY PLAN */
+.days { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.day-card h4 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.6rem; }
+.day-card ol { padding-left: 1.2rem; color: var(--text); font-size: 0.93rem; }
+.day-card li { margin-bottom: 0.35rem; }
+.day-card .t { font-family: var(--mono); font-size: 0.7rem; color: var(--sand); }
+
+/* ACCORDION */
+.acc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden; }
+.acc-btn { width: 100%; background: none; border: none; color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600; text-align: left; padding: 1rem 1.3rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 48px; }
+.acc-btn .chev { font-family: var(--mono); color: var(--accent); transition: transform 0.25s; flex-shrink: 0; }
+.acc-btn[aria-expanded="true"] .chev { transform: rotate(45deg); }
+.acc-body { display: none; padding: 0 1.3rem 1.2rem; }
+.acc-body.open { display: block; }
+
+/* RIDGE DIAGRAM */
+.ridge { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1rem; align-items: start; }
+.ridge svg { width: 100%; height: auto; background: var(--surface2); border-radius: 10px; }
+.facts { list-style: none; }
+.facts li { background: var(--surface2); border-radius: 8px; padding: 0.6rem 0.9rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text); }
+.facts li b { color: var(--sand); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; display: block; }
+
+/* ANGLE CARDS */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; margin: 1.2rem 0; }
+.angle { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 1.2rem 1.1rem; cursor: pointer; transition: border-color 0.2s, transform 0.2s; text-align: left; color: inherit; font: inherit; }
+.angle:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.18); }
+.angle[aria-pressed="true"] { border-color: var(--sand); box-shadow: 0 0 20px var(--sand-glow); }
+.angle .lab { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--sand); margin-bottom: 0.4rem; display: block; }
+.angle h4 { font-family: var(--serif); font-size: 1.08rem; margin-bottom: 0.5rem; }
+.angle p { font-size: 0.86rem; margin: 0; }
+.angle .fosen { display: block; font-size: 0.8rem; color: var(--sand); font-style: italic; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
+#angle-out { min-height: 1.5rem; }
+
+/* TOPIC CHOOSER */
+.topics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1.2rem 0; }
+.topic { background: var(--surface); border: 2px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; text-align: center; color: inherit; font: inherit; transition: border-color 0.2s; min-height: 48px; }
+.topic:hover { border-color: rgba(255,255,255,0.18); }
+.topic[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 18px var(--accent-glow); }
+.topic .ico { font-size: 1.5rem; }
+.topic h4 { font-size: 0.95rem; margin: 0.2rem 0; }
+.topic p { font-size: 0.78rem; margin: 0; }
+.panel { display: none; }
+.panel.active { display: block; animation: fade 0.35s; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.prompt { background: var(--surface2); border-radius: 10px; padding: 0.9rem 1.2rem; margin: 0.55rem 0; font-size: 0.95rem; color: var(--text); }
+.prompt .tag { color: var(--accent); }
+
+.step-head { display: flex; align-items: center; gap: 0.7rem; margin: 1.6rem 0 0.7rem; }
+.step-head .n { width: 30px; height: 30px; border-radius: 50%; background: var(--sand); color: var(--bg); font-weight: 700; display: grid; place-items: center; flex-shrink: 0; font-size: 0.9rem; }
+.step-head h3 { margin: 0; }
+
+.link-card { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 0.6rem; text-decoration: none; transition: border-color 0.2s; }
+.link-card:hover { border-color: var(--teal); }
+.link-card .who { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+.link-card .ttl { display: block; color: var(--text); font-weight: 600; font-size: 1rem; margin: 0.15rem 0 0.3rem; }
+.link-card .look { display: block; color: var(--muted); font-size: 0.86rem; }
+.link-card .look b { color: var(--sand); font-weight: 600; }
+
+.search-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.6rem; align-items: center; margin-bottom: 0.55rem; }
+.q { font-family: var(--mono); font-size: 0.8rem; padding: 0.6rem 0.8rem; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); }
+.q.old { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.25); }
+.q.new { color: var(--text); border-color: rgba(233,196,106,0.4); }
+.arrow { color: var(--sand); font-family: var(--mono); }
+
+.gov { background: linear-gradient(135deg, var(--surface), rgba(217,102,76,0.09)); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; margin-top: 1.5rem; }
+.gov .tag { color: var(--accent); }
+.gov p { color: var(--text); font-size: 0.93rem; }
+
+/* SORT QUIZ */
+.sort-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 0.6rem; }
+.sort-item .src { color: var(--text); font-size: 0.95rem; margin-bottom: 0.6rem; }
+.sort-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.sort-btns button { font: inherit; font-size: 0.85rem; font-weight: 600; padding: 0.45rem 0.9rem; border-radius: 6px; cursor: pointer; background: var(--surface2); border: 1px solid var(--border); color: var(--text); min-height: 40px; }
+.sort-btns button:hover { border-color: rgba(255,255,255,0.25); }
+.sort-fb { font-size: 0.87rem; margin-top: 0.55rem; display: none; }
+.sort-fb.show { display: block; }
+.sort-fb.ok { color: var(--olive); }
+.sort-fb.no { color: var(--sand); }
+.score { font-family: var(--mono); font-size: 0.75rem; color: var(--sand); margin-top: 0.5rem; }
+
+/* CHECK GRID */
+.checks4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin: 1rem 0; }
+.checks4 div { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem; font-size: 0.86rem; color: var(--muted); }
+.checks4 b { display: block; color: var(--sand); font-size: 0.95rem; margin-bottom: 0.2rem; }
+
+/* DOSSIER FIELDS */
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1rem 0; }
+.field { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; }
+.field .mode { float: right; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 4px; }
+.mode.type { color: var(--teal); border: 1px solid rgba(47,179,163,0.4); }
+.mode.hand { color: var(--sand); border: 1px solid rgba(233,196,106,0.4); }
+.field h4 { font-size: 0.98rem; color: var(--text); margin-bottom: 0.3rem; }
+.field p { font-size: 0.86rem; margin: 0; }
+.mla { font-family: var(--mono); font-size: 0.8rem; color: var(--text); background: var(--surface2); border-radius: 8px; padding: 0.8rem 1rem; margin: 0.6rem 0; line-height: 1.6; overflow-wrap: anywhere; }
+.mla i { color: var(--sand); font-style: normal; }
+
+/* BRIEF */
+.parts { margin: 1rem 0; }
+.part { display: grid; grid-template-columns: 190px 1fr; border-radius: 10px; overflow: hidden; margin-bottom: 0.55rem; border: 1px solid var(--border); }
+.part .pl { padding: 0.8rem 1rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.03em; display: flex; align-items: center; color: #0D1117; }
+.part .pr { background: var(--surface); padding: 0.8rem 1rem; font-size: 0.92rem; color: var(--text); font-style: italic; }
+.p1 { background: var(--blue); } .p2 { background: var(--olive); } .p3 { background: var(--accent); } .p4 { background: var(--sand); }
+.model { background: var(--surface2); border-radius: 10px; padding: 1.1rem 1.3rem; font-size: 0.95rem; line-height: 1.75; }
+.model .to { color: var(--sand); font-weight: 700; display: block; margin-bottom: 0.4rem; }
+.c1 { color: #9CC4EA; } .c2 { color: #B9CF7D; } .c3 { color: #F0A58F; } .c4 { color: var(--sand); }
+.key { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.82rem; margin-top: 0.7rem; }
+.key span::before { content: '●'; margin-right: 0.35rem; }
+
+.checklist { list-style: none; margin: 0.8rem 0; }
+.checklist li { padding: 0.65rem 0.2rem; border-bottom: 1px solid var(--border); font-size: 0.93rem; display: flex; gap: 0.6rem; cursor: pointer; user-select: none; color: var(--text); }
+.checklist li::before { content: '☐'; color: var(--teal); font-size: 1.1rem; flex-shrink: 0; line-height: 1.4; }
+.checklist li[aria-checked="true"] { color: var(--muted); text-decoration: line-through; }
+.checklist li[aria-checked="true"]::before { content: '☑'; color: var(--olive); }
+
+footer { border-top: 3px solid; border-image: linear-gradient(90deg, var(--accent), var(--sand), var(--teal)) 1; padding: 2rem 1.5rem; text-align: center; }
+footer p { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; margin: 0.2rem 0; }
+
+@media (max-width: 720px) {
+  .days, .ridge, .grid3, .topics, .fields { grid-template-columns: 1fr; }
+  .checks4 { grid-template-columns: 1fr 1fr; }
+  .search-row { grid-template-columns: 1fr; }
+  .search-row .arrow { display: none; }
+  .part { grid-template-columns: 1fr; }
+  .card { padding: 1.2rem; }
+  h2 { font-size: 1.6rem; }
+}
+</style>
+<style>
+.reveal-grid { display: grid; gap: 0.7rem; margin: 1rem 0; }
+.reveal { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.reveal button { width: 100%; text-align: left; background: none; border: none; color: var(--text); font: inherit; font-weight: 600; padding: 0.9rem 1.1rem; cursor: pointer; display: flex; gap: 0.8rem; align-items: center; min-height: 48px; }
+.reveal .pill { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.55rem; border-radius: 4px; color: #0D1117; flex-shrink: 0; }
+.reveal .hid { display: none; padding: 0 1.1rem 1rem; color: var(--text); font-size: 0.93rem; }
+.reveal .hid.open { display: block; }
+.pb { background: var(--blue); } .pg { background: var(--olive); } .ps { background: var(--sand); }
+.src2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.src2 .card p.quote { color: var(--text); font-size: 0.98rem; }
+.src2 .cite { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+.timeline { list-style: none; border-left: 2px solid var(--border); margin: 1rem 0 1rem 0.4rem; }
+.timeline li { padding: 0 0 0.9rem 1.1rem; position: relative; font-size: 0.93rem; color: var(--text); }
+.timeline li::before { content: ''; position: absolute; left: -7px; top: 0.45rem; width: 12px; height: 12px; border-radius: 50%; background: var(--sand); }
+.timeline b { font-family: var(--mono); font-size: 0.72rem; color: var(--sand); display: block; letter-spacing: 0.06em; }
+.lvl { display: flex; gap: 0.7rem; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 0.55rem; font-size: 0.95rem; color: var(--text); }
+.lvl .n { width: 28px; height: 28px; border-radius: 50%; background: var(--sand); color: #0D1117; font-weight: 700; display: grid; place-items: center; flex-shrink: 0; }
+.builder { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.3rem 1.4rem; }
+.lens-pick { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.lens-pick button { font: inherit; font-size: 0.85rem; font-weight: 600; padding: 0.5rem 0.9rem; border-radius: 6px; cursor: pointer; background: var(--surface2); border: 2px solid var(--border); color: var(--text); min-height: 44px; }
+.lens-pick button[aria-pressed="true"] { border-color: var(--sand); box-shadow: 0 0 14px var(--sand-glow); }
+.starters { margin: 0.6rem 0 1rem; }
+.starters div { background: var(--surface2); border-radius: 8px; padding: 0.55rem 0.9rem; margin-bottom: 0.4rem; font-size: 0.9rem; color: var(--text); font-style: italic; }
+textarea.sq { width: 100%; min-height: 80px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem 1rem; color: var(--text); font: inherit; font-size: 0.95rem; resize: vertical; }
+textarea.sq:focus { outline: none; border-color: var(--teal); }
+.warn { font-size: 0.85rem; color: var(--sand); min-height: 1.3rem; margin-top: 0.4rem; }
+.who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 1rem 0; }
+.who-grid .card h4 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+.who-grid .card p { font-size: 0.86rem; }
+.rules { display: grid; gap: 0.5rem; margin: 1rem 0; }
+.rule { display: grid; grid-template-columns: 170px 1fr; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+.rule .rl { background: var(--surface2); padding: 0.75rem 1rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sand); display: flex; align-items: center; }
+.rule .rr { background: var(--surface); padding: 0.75rem 1rem; font-size: 0.93rem; color: var(--text); }
+.rule.first .rl { background: var(--accent); color: #0D1117; }
+table.plan { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+table.plan th { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sand); text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border); }
+table.plan td { padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+table.plan td.m { color: var(--muted); font-style: italic; }
+@media (max-width: 720px) {
+  .jump { position: static; }
+  .src2, .who-grid { grid-template-columns: 1fr; }
+  .rule { grid-template-columns: 1fr; }
+  table.plan { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+<div class="top-bar"></div>
+
+<header class="hero">
+  <div class="hero-label">Vanishing Points · Week 4</div>
+  <h1>Who <em>pays the price</em>?</h1>
+  <p class="hero-sub">Environmental change doesn't hit everyone equally. This week you look through three equity lenses, rewrite SQ2 for your own issue, and finish your dossier plan.</p>
+  <div class="hero-meta">
+    <span>Monday + Tuesday</span>
+    <span>Rewrite SQ2</span>
+    <span>Checkpoint · Tue 10 Nov</span>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Jump to section">
+  <div class="inner">
+    <a href="#plan">Plan</a>
+    <a href="#lenses" class="day">Mon · Lenses</a>
+    <a href="#delhi" class="day">Mon · Delhi</a>
+    <a href="#aral" class="day">Mon · Aral Sea</a>
+    <a href="#sq2" class="day">Mon · SQ2</a>
+    <a href="#questions" class="day">Tue · Questions</a>
+    <a href="#rules" class="day">Tue · Rules</a>
+    <a href="#dossier" class="day">Tue · Plan</a>
+  </div>
+</nav>
+
+<main>
+<!-- 01 -->
+<section id="plan">
+  <div class="container">
+    <h2><span class="num">01</span>This Week</h2>
+    <p>Your Slot A data shows <strong>what</strong> is happening. This week is about <strong>who</strong> it's happening to: <strong>SQ2</strong> in your dossier, <em>Who is most affected, and why them?</em></p>
+    <div class="days">
+      <div class="card day-card tint-teal">
+        <span class="tag">Monday</span>
+        <h4>Look through the lenses</h4>
+        <ol>
+          <li>Warm up and key terms <span class="t">(7 min)</span></li>
+          <li>The three equity lenses <span class="t">(3 min)</span></li>
+          <li>Delhi exemplar, three ways <span class="t">(8 min)</span></li>
+          <li>Aral recap + <strong>Task 1</strong> <span class="t">(12 min)</span></li>
+          <li>Rewriting SQ2 + <strong>Task 2</strong> <span class="t">(20 min)</span></li>
+        </ol>
+      </div>
+      <div class="card day-card tint-sand">
+        <span class="tag">Tuesday</span>
+        <h4>Ask it. Plan it.</h4>
+        <ol>
+          <li>Why interview? Open vs closed <span class="t">(7 min)</span></li>
+          <li><strong>Task 3:</strong> draft interview questions <span class="t">(12 min)</span></li>
+          <li>Interview rules <span class="t">(3 min)</span></li>
+          <li><strong>Task 4:</strong> finalise your dossier plan <span class="t">(20 min)</span></li>
+          <li>Check and look ahead <span class="t">(3 min)</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="ic">📌</span>
+      <p><strong>Checkpoint Tue 10 Nov:</strong> dossier plan complete (p.3), with your rewritten SQ2 and a change-log entry. School is closed Thu 12 and Fri 13 Nov.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="lenses">
+  <div class="container">
+    <h2><span class="num">02</span>The Three Equity Lenses <span class="when">Monday</span></h2>
+    <p>Each lens asks a different equity question about the same facts. Click one to see what it makes you look for.</p>
+    <div class="grid3">
+      <button class="angle" aria-pressed="false" data-angle="env">
+        <span class="lab">Environmental equity</span>
+        <h4>Who benefits or suffers most?</h4>
+        <p>Compare who gains from a resource with who loses it.</p>
+      </button>
+      <button class="angle" aria-pressed="false" data-angle="acc">
+        <span class="lab">Access to solutions</span>
+        <h4>Who has the power or resources to adapt?</h4>
+        <p>Who can move, pay, rest, go to court, or get help? Who can't?</p>
+      </button>
+      <button class="angle" aria-pressed="false" data-angle="voice">
+        <span class="lab">Narratives &amp; voice</span>
+        <h4>Whose story gets told? Who is invisible?</h4>
+        <p>Whose words appear in the source? Who is described but never quoted?</p>
+      </button>
+    </div>
+    <p id="angle-out" aria-live="polite"></p>
+    <div class="callout">
+      <span class="ic">🔭</span>
+      <p><strong>Not the same as your dossier lens.</strong> The "My lens" box (individual / local / global) is the <strong>scale</strong> you look at. An equity lens is the <strong>question</strong> you ask at that scale. Example: a <em>local</em> lens on Delhi, asked through <em>access to solutions</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section id="delhi">
+  <div class="container">
+    <h2><span class="num">03</span>Delhi, Three Ways <span class="when">Monday</span></h2>
+    <p>You met these two sources in the dossier exemplar. Read them, then predict what each lens would notice <strong>before</strong> you click.</p>
+    <div class="src2">
+      <div class="card tint-teal">
+        <span class="tag" style="color:var(--teal)">Slot A · Data</span>
+        <p class="quote">In lockdown Phase 1 (spring 2020), NO₂ in urban areas around Delhi fell by 60% compared with what was expected. Rural areas saw much smaller, short-lived drops.</p>
+        <span class="cite">Misra et al., Scientific Reports, 2021</span>
+      </div>
+      <div class="card tint-sand">
+        <span class="tag">Slot D · Voices</span>
+        <p class="quote">Karmunisha has sold vegetables from a handcart in Sundar Nagri for nearly 40 years. She and her husband have breathing problems. She was advised to rest, "a luxury daily wagers like her cannot afford."</p>
+        <span class="cite">Down To Earth, 2025</span>
+      </div>
+    </div>
+    <div class="reveal-grid">
+      <div class="reveal"><button aria-expanded="false"><span class="pill pb">Environmental equity</span>Who suffers most?</button>
+        <div class="hid">Karmunisha works outdoors all day <strong>and</strong> lives in a small, poorly ventilated home, so she breathes the worst air at work and at home. The city had more pollution to lose than the countryside.</div></div>
+      <div class="reveal"><button aria-expanded="false"><span class="pill pg">Access to solutions</span>Who can adapt?</button>
+        <div class="hid">She was told to rest but can't afford to lose a day's wages. Richer people can stay indoors, work from home or buy purifiers. A cycle: being poor increases her exposure, and the exposure makes her poorer (lost workdays, customers who won't buy).</div></div>
+      <div class="reveal"><button aria-expanded="false"><span class="pill ps">Narratives &amp; voice</span>Who is invisible?</button>
+        <div class="hid">The satellite study counts molecules, not people. It treats "urban" as one area. In the Down To Earth article a journalist describes her life, and only one sentence is in Karmunisha's own words.</div></div>
+    </div>
+    <div class="callout"><span class="ic">🧭</span><p>The exemplar's SQ2 was <em>"Which people in Delhi breathe the most polluted air, and what puts them at greater risk than others?"</em> <strong>Which lens is it using?</strong></p></div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="aral">
+  <div class="container">
+    <h2><span class="num">04</span>Task 1 · The Aral Sea Through a Lens <span class="when">Monday · 10 min</span></h2>
+    <p>You met the Aral Sea in Week 1. Here's what happened next. In pairs, use the lens your teacher gives you.</p>
+    <ul class="timeline">
+      <li><b>1960s</b>Soviet planners divert the Amu Darya and Syr Darya rivers to irrigate cotton.</li>
+      <li><b>By the 2000s</b>More than 90% of the sea's surface has dried out. The fish die, fishing towns empty, and toxic salt and dust storms spread illness.</li>
+      <li><b>2005</b>Kazakhstan builds the 13 km Kokaral Dam, with World Bank support, to save the North Aral.</li>
+      <li><b>By 2025</b>North Aral: water volume up 42%, fish catch back to about 8,000 tonnes a year. South Aral (Uzbekistan): still shrinking.</li>
+    </ul>
+    <div class="lvl"><span class="n">A</span><div><strong>Identify</strong> who suffered most from the Aral Sea's shrinking.</div></div>
+    <div class="lvl"><span class="n">B</span><div><strong>Explain</strong> why them, using your lens's question.</div></div>
+    <div class="lvl"><span class="n">C</span><div>The North recovered and the South did not. <strong>Discuss</strong> what that shows about access to solutions.</div></div>
+    <div class="acc">
+      <button class="acc-btn" aria-expanded="false" aria-controls="acc-hint"><span>Stuck? Hints for each lens</span><span class="chev">+</span></button>
+      <div class="acc-body" id="acc-hint">
+        <p><strong>Environmental equity:</strong> where did the cotton profits go? Who lived downstream, by the sea?</p>
+        <p><strong>Access to solutions:</strong> who had the money, water rights and political power to build a fix, and for which part of the sea?</p>
+        <p><strong>Narratives &amp; voice:</strong> the story is often told as "Soviet planners' mistake". Whose experience is missing from that version? (Think fishers, farmers, and families in Karakalpakstan.)</p>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;margin-top:0.8rem;">Facts: Global Voices (May 2026); World Bank, "Saving a Corner of the Aral Sea" (2005).</p>
+  </div>
+</section>
+
+<!-- 05 -->
+<section id="sq2">
+  <div class="container">
+    <h2><span class="num">05</span>Task 2 · Rewrite Your SQ2 <span class="when">Monday · 15 min</span></h2>
+    <p>The fixed SQ2 is <em>"Who is most affected, and why them?"</em> Rewrite it through <strong>one lens</strong>, for <strong>your</strong> issue. Draft here, then write the final version on <strong>p.2 of your dossier</strong>.</p>
+    <div class="builder">
+      <span class="tag">1 · Choose a lens</span>
+      <div class="lens-pick">
+        <button aria-pressed="false" data-l="env">Environmental equity</button>
+        <button aria-pressed="false" data-l="acc">Access to solutions</button>
+        <button aria-pressed="false" data-l="voice">Narratives &amp; voice</button>
+      </div>
+      <div id="starters" class="starters" aria-live="polite"><div>Pick a lens to see question starters and the Delhi model.</div></div>
+      <span class="tag">2 · Draft your SQ2</span>
+      <textarea class="sq" id="sqdraft" placeholder="Name the people and the place, e.g. small-scale fishers in the Philippines…" aria-label="Draft your SQ2"></textarea>
+      <p class="warn" id="sqwarn" aria-live="polite"></p>
+      <span class="tag" style="margin-top:0.6rem;">3 · Run the four checks (swap with a partner)</span>
+      <ul class="checklist" role="list">
+        <li role="checkbox" aria-checked="false" tabindex="0">One issue</li>
+        <li role="checkbox" aria-checked="false" tabindex="0">A clear place or scale (a named group of people, too)</li>
+        <li role="checkbox" aria-checked="false" tabindex="0">Doesn't assume its answer</li>
+        <li role="checkbox" aria-checked="false" tabindex="0">Can be answered with your sources (which slot will answer it?)</li>
+      </ul>
+      <p style="font-size:0.82rem;margin:0.5rem 0 0;">This box doesn't save. Copy your final SQ2 into your dossier before you close the page.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="questions">
+  <div class="container">
+    <h2><span class="num">06</span>Task 3 · Interview Questions <span class="when">Tuesday · 12 min</span></h2>
+    <p><strong>Slot E is optional</strong>, but everyone drafts questions today. Writing good open questions is a research skill. An interview can give you a real voice and local detail. It <strong>can't</strong> tell you about everyone, and it can't replace Slots A–D.</p>
+
+    <h3>Warm up: open or closed?</h3>
+    <p>Closed questions get "yes", "no" or one word. Open questions get stories and reasons.</p>
+    <div id="sorter"></div>
+    <p class="score" id="sort-score" aria-live="polite"></p>
+
+    <h3>Who could you ask?</h3>
+    <div class="who-grid">
+      <div class="card"><h4>🐠 Coral reefs</h4><p>A diver or dive instructor; someone with family in a reef country.</p></div>
+      <div class="card"><h4>🌾 The Sahel</h4><p>Someone with family in West Africa; an aid or development worker.</p></div>
+      <div class="card"><h4>🏔️ Glaciers &amp; Arctic</h4><p>A glacier guide or hiker; someone from Northern Norway or a mountain region.</p></div>
+    </div>
+
+    <h3>Now draft yours</h3>
+    <div class="lvl"><span class="n">1</span><div>Decide who you could <strong>realistically</strong> ask. No one yet? Write for an imagined expert, as practice.</div></div>
+    <div class="lvl"><span class="n">2</span><div>Write <strong>3–5 open questions</strong> (Who / How / Why). At least one must connect to your new SQ2.</div></div>
+    <div class="lvl"><span class="n">3</span><div>Test each one: could Google answer it? Could it be answered in one word? Does it suggest an answer? Rewrite it.</div></div>
+    <div class="lvl"><span class="n">4</span><div>Paste them into <strong>Slot E</strong>, or into your notes if you're not doing Slot E.</div></div>
+  </div>
+</section>
+
+<!-- 07 -->
+<section id="rules">
+  <div class="container">
+    <h2><span class="num">07</span>Interview Rules <span class="when">Tuesday</span></h2>
+    <div class="rules">
+      <div class="rule first"><div class="rl">Ask first</div><div class="rr">Check with your teacher before you contact anyone.</div></div>
+      <div class="rule"><div class="rl">Ask permission</div><div class="rr">Explain what it is for and that they can stop at any time.</div></div>
+      <div class="rule"><div class="rl">Record it</div><div class="rr">Write down who, when, and how (in person or by message).</div></div>
+      <div class="rule"><div class="rl">Quote accurately</div><div class="rr">Use their exact words, or say clearly when you're summarising.</div></div>
+      <div class="rule"><div class="rl">Protect them</div><div class="rr">No full name without permission. "A dive instructor in Stavanger" is fine.</div></div>
+    </div>
+    <div class="callout"><span class="ic">🛡️</span><p>Family, family friends and school staff are the safest people to ask. Don't contact strangers online.</p></div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="dossier">
+  <div class="container">
+    <h2><span class="num">08</span>Task 4 · Finalise Your Dossier Plan <span class="when">Tuesday · 20 min</span></h2>
+    <p>Open <strong>p.3 of your dossier</strong>. You drafted the plan in Week 3. Today you finish it with your new SQ2. <strong>Every row filled in.</strong></p>
+    <table class="plan">
+      <thead><tr><th>Slot</th><th>Kind</th><th>Answers which SQ?</th><th>Where I will search</th><th>Target</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>Data</td><td class="m">probably SQ1</td><td class="m">done ✓</td><td>Thu 5 Nov</td></tr>
+        <tr><td><strong>B</strong></td><td>Official</td><td class="m">you decide</td><td class="m">name a UN agency, ministry or company</td><td>Thu 19 Nov</td></tr>
+        <tr><td><strong>C</strong></td><td>News</td><td class="m">you decide</td><td class="m">name an outlet: NRK, BBC, Reuters…</td><td>Thu 19 Nov</td></tr>
+        <tr><td><strong>D</strong></td><td>Voices</td><td class="m">probably SQ2</td><td class="m">where are affected people's voices recorded?</td><td>Thu 26 Nov</td></tr>
+        <tr><td><strong>E</strong></td><td>Interview (optional)</td><td class="m">you decide</td><td class="m">who, and how</td><td class="m">your choice</td></tr>
+      </tbody>
+    </table>
+    <h3>Plan change log</h3>
+    <p>Good researchers write down <strong>what</strong> changed and <strong>why</strong>. Add today's entry, e.g.:</p>
+    <div class="mla">10 Nov · Rewrote SQ2 through access to solutions · My Slot A showed the problem, but not who couldn't adapt to it.</div>
+
+    <h3>Before you leave</h3>
+    <ul class="checklist" role="list">
+      <li role="checkbox" aria-checked="false" tabindex="0">My SQ2 is rewritten through an equity lens (p.2)</li>
+      <li role="checkbox" aria-checked="false" tabindex="0">It passes the four checks</li>
+      <li role="checkbox" aria-checked="false" tabindex="0">I drafted 3–5 open interview questions</li>
+      <li role="checkbox" aria-checked="false" tabindex="0">Every slot in my plan says which SQ it answers and where I'll search</li>
+      <li role="checkbox" aria-checked="false" tabindex="0">My change log has today's entry</li>
+      <li role="checkbox" aria-checked="false" tabindex="0">I showed my plan to my teacher</li>
+    </ul>
+
+    <div class="card tint-teal" style="margin-top:1.8rem;">
+      <span class="tag" style="color:var(--teal)">Next week · Innovation &amp; solutions</span>
+      <p style="color:var(--text)">Can technology alone fix it? You'll rewrite SQ3, hunt for <strong>Official</strong> and <strong>News</strong> sources (Slots B &amp; C, due Thu 19 Nov), and debate who should lead: governments or businesses.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Vanishing Points · MYP4 I&amp;S · Week 4: Equity</p>
+  <p>Delhi sources from the dossier exemplar · Aral Sea: Global Voices (2026), World Bank (2005)</p>
+</footer>
+
+<script>
+// Accordions
+document.querySelectorAll('.acc-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    document.getElementById(btn.getAttribute('aria-controls')).classList.toggle('open', !open);
+  });
+});
+// Reveal cards
+document.querySelectorAll('.reveal button').forEach(b => {
+  b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') === 'true';
+    b.setAttribute('aria-expanded', String(!open));
+    b.nextElementSibling.classList.toggle('open', !open);
+  });
+});
+// Lens cards
+const angleText = {
+  env: 'Environmental equity: look for WHO gains and WHO loses, and numbers that compare groups.',
+  acc: 'Access to solutions: look for who can adapt and who can\'t: money, rights, housing, work, relocation, courts.',
+  voice: 'Narratives & voice: notice WHOSE words appear in a source. Who is described, and who gets to speak?'
+};
+document.querySelectorAll('.angle').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.angle').forEach(c => c.setAttribute('aria-pressed', 'false'));
+    card.setAttribute('aria-pressed', 'true');
+    document.getElementById('angle-out').innerHTML = '<strong>' + angleText[card.dataset.angle] + '</strong>';
+  });
+});
+// SQ2 builder
+const starters = {
+  env: ['Which [group] in [place] are most affected by [issue], and why them?', 'How far does [issue] affect [group A] more than [group B] in [place]?', 'Delhi model: Which people in Delhi breathe the most polluted air, and what puts them at greater risk than others?'],
+  acc: ['Which [group] in [place] can adapt to [issue], and why can others not?', 'Who has received help with [issue] in [place], and who has been left out?', 'Delhi model: Which Delhi residents can protect themselves from polluted air, and why can others not?'],
+  voice: ['Whose experiences of [issue] in [place] appear in reports and news, and whose are missing?', 'How are [group] described in reporting on [issue], and do they get to speak for themselves?', 'Delhi model: Whose experiences of Delhi\'s air pollution appear in reports and news, and whose are missing?']
+};
+document.querySelectorAll('.lens-pick button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.lens-pick button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true');
+    document.getElementById('starters').innerHTML = starters[b.dataset.l].map(t => `<div>${t}</div>`).join('');
+  });
+});
+const sq = document.getElementById('sqdraft'), warn = document.getElementById('sqwarn');
+sq.addEventListener('input', () => {
+  const v = sq.value.toLowerCase(), msgs = [];
+  if (/\[|\]/.test(v)) msgs.push('Replace the [brackets] with your own group, place and issue.');
+  if (/\bpeople\b/.test(v) && !/\bwhich people\b/.test(v)) msgs.push('"People" is vague. Can you name the group?');
+  if (/^why (are|is|do|does)/.test(v.trim())) msgs.push('"Why are…" questions often assume their answer. Try "Which…" or "How far…".');
+  if (v.trim() && !v.trim().endsWith('?')) msgs.push('A question ends with a question mark.');
+  warn.textContent = msgs.join(' ');
+});
+// Open or closed sorter
+const items = [
+  { s: 'Is the glacier smaller than before?', a: 'closed', fb: 'Closed: "yes" or "no". Try: "How has the glacier changed since you first saw it?"' },
+  { s: 'Who in your family\'s village has been most affected by changes to fishing, and why them?', a: 'open', fb: 'Open: it asks for people and reasons.' },
+  { s: 'Is the government doing enough?', a: 'closed', fb: 'Closed, and leading: it suggests an answer. Try: "What help, if any, have people received, and who decided?"' },
+  { s: 'How did the drought change the way your relatives farm?', a: 'open', fb: 'Open: it asks for change and experience.' },
+  { s: 'When was the dam built?', a: 'closed', fb: 'Closed, and Google can answer it. Save interviews for what only this person knows.' },
+  { s: 'What do you wish people in Norway understood about this?', a: 'open', fb: 'Open: a great last question, and it may give you a quotable line.' }
+];
+const sorter = document.getElementById('sorter');
+let answered = 0, correct = 0;
+items.forEach((it, i) => {
+  const d = document.createElement('div');
+  d.className = 'sort-item';
+  d.innerHTML = `<div class="src">"${it.s}"</div><div class="sort-btns"><button data-v="open">Open</button><button data-v="closed">Closed</button></div><div class="sort-fb" aria-live="polite"></div>`;
+  d.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    if (d.dataset.done) return;
+    d.dataset.done = '1';
+    const ok = b.dataset.v === it.a;
+    answered++; if (ok) correct++;
+    const fb = d.querySelector('.sort-fb');
+    fb.className = 'sort-fb show ' + (ok ? 'ok' : 'no');
+    fb.textContent = (ok ? '✓ ' : 'Not quite. ') + it.fb;
+    b.style.borderColor = ok ? 'var(--olive)' : 'var(--sand)';
+    document.getElementById('sort-score').textContent = `${correct} / ${answered} so far` + (answered === items.length ? '. Done.' : '');
+  }));
+  sorter.appendChild(d);
+});
+// Checklists
+document.querySelectorAll('.checklist li').forEach(li => {
+  const toggle = () => li.setAttribute('aria-checked', li.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+  li.addEventListener('click', toggle);
+  li.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } });
+});
+</script>
+</body>
+</html>
